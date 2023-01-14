@@ -2,9 +2,7 @@
 </script>
 
 <template>
-  <header class="w-full bg-yellow p-4">
-    <v-icon name="hi-search" />
-  </header>
+  <h1 class="text-3xl font-sans text-center">RakeMovies</h1>
 </template>
 
 <style lang="sass" scoped>
