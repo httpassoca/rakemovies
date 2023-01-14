@@ -1,15 +1,25 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { useMoviesStore } from '../stores/movies';
+
+const title = ref('')
+
+const movieStore = useMoviesStore();
+async function getFilm() {
+  console.log('test 1')
+  await movieStore.getFilm(title.value);
+}
 </script>
 
 <template>
-  <form action="#">
-    <input type="text" placeholder="Search here a film!">
-    <button class="bg-yellow">Search</button>
+  <form @submit.prevent="getFilm">
+    <input type="text" placeholder="Search here a film!" v-model="title">
+    <button class="bg-yellow" type="submit">Search</button>
   </form>
 </template>
 
 <style scoped lang="sass">
-form
+div
   display: flex
   gap: 8px
 input
