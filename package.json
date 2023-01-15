@@ -12,7 +12,8 @@
     "axios": "^1.2.2",
     "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "^2.0.28",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "vue-router": "4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

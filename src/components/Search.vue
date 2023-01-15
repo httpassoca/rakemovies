@@ -1,18 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useMoviesStore } from '../stores/movies';
+import { useRouter } from 'vue-router';
 
 const title = ref('')
-
+const router = useRouter();
 const movieStore = useMoviesStore();
+
 async function getFilm() {
   await movieStore.getFilm(title.value);
+  router.push('/film');
 }
 </script>
 
 <template>
   <form @submit.prevent="getFilm">
-    <input type="text" placeholder="Search here a film!" v-model="title">
+    <input type="text" placeholder="Search by title" v-model="title">
     <button class="bg-yellow" type="submit">Search</button>
   </form>
 </template>
