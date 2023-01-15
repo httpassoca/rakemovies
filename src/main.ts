@@ -5,9 +5,9 @@ import App from './App.vue'
 const pinia = createPinia();
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { HiSearch } from "oh-vue-icons/icons";
+import { HiExternalLink, HiSearch } from "oh-vue-icons/icons";
 
-addIcons(HiSearch);
+addIcons(HiExternalLink, HiSearch);
 
 const app = createApp(App);
 app.component("v-icon", OhVueIcon);

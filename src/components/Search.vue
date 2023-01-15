@@ -6,7 +6,6 @@ const title = ref('')
 
 const movieStore = useMoviesStore();
 async function getFilm() {
-  console.log('test 1')
   await movieStore.getFilm(title.value);
 }
 </script>
@@ -19,7 +18,7 @@ async function getFilm() {
 </template>
 
 <style scoped lang="sass">
-div
+form
   display: flex
   gap: 8px
 input
