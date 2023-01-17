@@ -15,7 +15,7 @@ export class OmdbAPI implements IOmdbApi {
         "Content-type": "application/json",
       },
       params: {
-        "apiKey": import.meta.env.VITE_API_KEY
+        "apiKey": import.meta.env.VITE_OMDB_API_KEY
       }}
     );
   }
