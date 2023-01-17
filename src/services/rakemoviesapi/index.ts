@@ -30,12 +30,12 @@ export class RakemoviesAPI implements IRakemoviesAPI {
   }
 
   public async searchMovies(data: IRakemovieSearchRequest): Promise<IRakemovieSearchResponse[]> {
-    const movies = await this.rakemoviesApi.get('/movie/search', {...data});
+    const movies = await this.rakemoviesApi.get('/movie/search', {params: {...data}});
     return movies.data;
   }
 
   public async editMovie(data: IRakemovieEditMovieRequest): Promise<IRakemovieMovieResponse> {
-    const movie = await this.rakemoviesApi.put(`/movie/${data.imdbId}`, {...data.data});
+    const movie = await this.rakemoviesApi.put(`/movie/${data.imdbId}`, {params: {...data.data}});
     return movie.data;
   }
 
