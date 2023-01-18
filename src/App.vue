@@ -1,7 +1,3 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
   <main class="mx-auto flex flex-col justify-center mt-10">
     <router-view></router-view>

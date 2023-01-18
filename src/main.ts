@@ -7,6 +7,7 @@ import App from './App.vue'
 import './style.css'
 import './icons.ts'
 
+// @ts-ignore
 const app = createApp(App);
 app.component("v-icon", OhVueIcon);
 app.use(router);
