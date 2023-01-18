@@ -1,61 +1,103 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import Spoiler from '../components/Base/Spoilers.vue'
-import { useMoviesStore } from '../stores/movies';
-import { onMounted, reactive } from 'vue';
-import { IMovieResponse } from '../services/omdbapi/interfaces/movie-response.interface';
-import AppLoading from '../components/Base/AppLoading.vue';
+import { useRouter } from 'vue-router'
+import Spoiler from '../components/Base/AppSpoilers.vue'
+import { useMoviesStore } from '../stores/movies'
+import { onMounted, reactive } from 'vue'
+import { IMovieResponse } from '../services/omdbapi/interfaces/movie-response.interface'
+import AppLoading from '../components/Base/AppLoading.vue'
 
-const router = useRouter();
-const movieStore = useMoviesStore();
+const router = useRouter()
+const movieStore = useMoviesStore()
 
 const state = reactive({
-  movie: null as IMovieResponse | null,
+  movie: null as IMovieResponse | null
 })
 
 onMounted(async () => {
-  const movieImdbId = router.currentRoute.value.params['id'] as string;
-  state.movie = await movieStore.getMovieById(movieImdbId);
-});
+  const movieImdbId = router.currentRoute.value.params.id as string
+  state.movie = await movieStore.getMovieById(movieImdbId)
+})
 </script>
 
 <template>
-  <div class="cursor-pointer font-sans" @click="router.push('/')">
-    <v-icon name="bi-arrow-bar-left" scale="1.5" fill="#fec200"></v-icon>
+  <div
+    class="cursor-pointer font-sans"
+    @click="router.push('/')"
+  >
+    <v-icon
+      name="bi-arrow-bar-left"
+      scale="1.5"
+      fill="#fec200"
+    />
     <span class="text-xl">Back</span>
   </div>
-  <div class="film" v-if="!movieStore.isLoading && state.movie">
+  <div
+    class="film"
+    v-if="!movieStore.isLoading && state.movie"
+  >
     <div class="flex flex-col gap-8">
-      <img class="poster" :src="state.movie.Poster" :alt="state.movie.Title + ' poster'">
+      <img
+        class="poster"
+        :src="state.movie.Poster"
+        :alt="state.movie.Title + ' poster'"
+      >
       <div class="ratings">
-        <a v-if="state.movie.Ratings[0]?.Value" :href="`https://www.imdb.com/title/${state.movie.imdbID}`"
-          target="_blank" rel="noopener noreferrer">
+        <a
+          v-if="state.movie.Ratings[0]?.Value"
+          :href="`https://www.imdb.com/title/${state.movie.imdbID}`"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <div class="image">
-            <img src="../assets/icon-imdb.webp" alt="IMDB icon">
+            <img
+              src="../assets/icon-imdb.webp"
+              alt="IMDB icon"
+            >
             <div class="icon">
-              <v-icon name="hi-external-link" scale="1.5"></v-icon>
+              <v-icon
+                name="hi-external-link"
+                scale="1.5"
+              />
             </div>
           </div>
           <span>{{ state.movie.Ratings[0].Value }}</span>
         </a>
-        <a v-if="state.movie.Ratings[1]?.Value"
-          :href="`https://www.rottentomatoes.com/search?search=${state.movie.Title}`" target="_blank"
-          rel="noopener noreferrer">
+        <a
+          v-if="state.movie.Ratings[1]?.Value"
+          :href="`https://www.rottentomatoes.com/search?search=${state.movie.Title}`"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <div class="image">
-            <img src="../assets/icon-tomatoes.webp" alt="Rotten Tomatoes icon">
+            <img
+              src="../assets/icon-tomatoes.webp"
+              alt="Rotten Tomatoes icon"
+            >
             <div class="icon">
-              <v-icon name="hi-search" scale="1.5"></v-icon>
+              <v-icon
+                name="hi-search"
+                scale="1.5"
+              />
             </div>
           </div>
           <span>{{ state.movie.Ratings[1].Value }}</span>
         </a>
-        <a v-if="state.movie.Ratings[2]?.Value"
-          :href="`https://www.metacritic.com/search/all/${state.movie.Title}/results`" target="_blank"
-          rel="noopener noreferrer">
+        <a
+          v-if="state.movie.Ratings[2]?.Value"
+          :href="`https://www.metacritic.com/search/all/${state.movie.Title}/results`"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <div class="image">
-            <img src="../assets/icon-meta.webp" alt="Metascore icon">
+            <img
+              src="../assets/icon-meta.webp"
+              alt="Metascore icon"
+            >
             <div class="icon">
-              <v-icon name="hi-search" scale="1.5"></v-icon>
+              <v-icon
+                name="hi-search"
+                scale="1.5"
+              />
             </div>
           </div>
           <span>{{ state.movie.Ratings[2].Value }}</span>

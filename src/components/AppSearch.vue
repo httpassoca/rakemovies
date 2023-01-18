@@ -1,27 +1,41 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
-import { useMoviesStore } from '../stores/movies';
-import { ISearchResponse } from '../services/omdbapi/interfaces/movie-search-response.interface';
-import AppLoading from './Base/AppLoading.vue';
+import { ref, reactive } from 'vue'
+import { useMoviesStore } from '../stores/movies'
+import { ISearchResponse } from '../services/omdbapi/interfaces/movie-search-response.interface'
+import AppLoading from './Base/AppLoading.vue'
 
 const title = ref('')
 const state = reactive({
-  searchResults: [] as ISearchResponse[],
+  searchResults: [] as ISearchResponse[]
 })
-const movieStore = useMoviesStore();
+const movieStore = useMoviesStore()
 
-async function searchMovie() {
-  state.searchResults = await movieStore.searchMovie(title.value) || [];
+async function searchMovie () {
+  state.searchResults = await movieStore.searchMovie(title.value) || []
 }
 </script>
 
 <template>
   <form @submit.prevent="searchMovie">
-    <input type="text" placeholder="Search by title" v-model="title">
-    <button class="bg-yellow" type="submit">Search</button>
+    <input
+      type="text"
+      placeholder="Search by title"
+      v-model="title"
+    >
+    <button
+      class="bg-yellow"
+      type="submit"
+    >
+      Search
+    </button>
   </form>
   <div v-if="state.searchResults.length && !movieStore.isLoading">
-    <a class="mb-4" :href="`/movie/${result.imdbID}`" v-for="result in state.searchResults">
+    <a
+      v-for="(result, index) in state.searchResults"
+      :key="index"
+      :href="`/movie/${result.imdbID}`"
+      class="mb-4"
+    >
       <div class="movie-result">
         <span>{{ result.Title }} ({{ result.Year }})</span>
         <span>Type: {{ result.Type }}</span>

@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const props = defineProps({ data: String })
+const props = defineProps({
+  data: String
+})
 
 const isVisible = ref(false)
 
@@ -11,7 +13,10 @@ const isVisible = ref(false)
   <span v-if="isVisible">
     {{ props.data }}
   </span>
-  <span v-else @click="isVisible = true">
+  <span
+    @click="isVisible = true"
+    v-else
+  >
     click to see spoiler
   </span>
 </template>

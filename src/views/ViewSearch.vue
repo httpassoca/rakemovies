@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppTitle from '../components/Base/AppTitle.vue';
-import Search from '../components/Search.vue';
-import Inspiration from '../components/Inspiration.vue';
+import Search from '../components/AppSearch.vue';
+import Inspiration from '../components/AppInspiration.vue';
 
 </script>
 
