@@ -1,13 +1,11 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { HiExternalLink, HiSearch, BiArrowBarLeft, BiFilm } from "oh-vue-icons/icons";
 import { router } from './router';
+import { OhVueIcon } from 'oh-vue-icons';
 const pinia = createPinia();
 import App from './App.vue'
 import './style.css'
-
-addIcons(HiExternalLink, HiSearch, BiArrowBarLeft, BiFilm);
+import './icons.ts'
 
 const app = createApp(App);
 app.component("v-icon", OhVueIcon);
