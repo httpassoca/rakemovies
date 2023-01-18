@@ -22,18 +22,26 @@ export class OmdbAPI implements IOmdbApi {
 
   public async search(
     data: IMovieSearchRequest,
-  ): Promise<IMovieSearchResponse> {
+  ): Promise<IMovieSearchResponse | null> {
     const res = await this.ombdApi.get<IMovieSearchResponse>('', {
       params: data as IMovieSearchRequest,
     });
-    return res.data;
+    if (res.data.Response === 'True') {
+      return res.data;
+    } else {
+      return null;
+    }
   }
 
-  public async searchByIdOrTitle(data: IMovieRequest): Promise<IMovieResponse> {
+  public async searchByIdOrTitle(data: IMovieRequest): Promise<IMovieResponse | null> {
     const res = await this.ombdApi.get<IMovieResponse>('', {
       params: data as IMovieRequest,
     });
-    return res.data;
+    if (res.data.Response === 'True') {
+      return res.data;
+    } else {
+      return null;
+    }
   }
 
 }
