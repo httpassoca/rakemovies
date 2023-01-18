@@ -7,8 +7,8 @@ const routes = [
     component: () => import('./views/ViewSearch.vue')
   },
   {
-    path: '/film',
-    name: 'film',
+    path: '/movie/:id',
+    name: 'movie',
     component: () => import('./views/ViewFilm.vue')
   },
 ]

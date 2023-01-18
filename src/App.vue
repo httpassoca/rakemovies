@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <main class="mx-auto flex flex-col justify-center min-h-screen">
+  <main class="mx-auto flex flex-col justify-center mt-10">
     <router-view></router-view>
   </main>
 </template>

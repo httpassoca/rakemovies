@@ -1,23 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { useMoviesStore } from '../stores/movies';
-import { useRouter } from 'vue-router';
+import { ISearchResponse } from '../services/omdbapi/interfaces/movie-search-response.interface';
 
 const title = ref('')
-const router = useRouter();
+const state = reactive({
+  searchResults: [] as ISearchResponse[],
+})
 const movieStore = useMoviesStore();
 
-async function getFilm() {
-  await movieStore.getFilm(title.value);
-  router.push('/film');
+async function searchMovie() {
+  state.searchResults = await movieStore.searchMovie(title.value) || [];
 }
 </script>
 
 <template>
-  <form @submit.prevent="getFilm">
+  <form @submit.prevent="searchMovie">
     <input type="text" placeholder="Search by title" v-model="title">
     <button class="bg-yellow" type="submit">Search</button>
   </form>
+  <div v-if="state.searchResults.length">
+    <a class="mb-4" :href="`/movie/${result.imdbID}`" v-for="result in state.searchResults">
+      <div class="movie-result">
+        <span>{{ result.Title }} ({{ result.Year }})</span>
+        <span>Type: {{ result.Type }}</span>
+      </div>
+    </a>
+  </div>
 </template>
 
 <style scoped lang="sass">
@@ -34,4 +43,12 @@ button
   color: black
   padding: 6px 12px
   border-radius: 4px
+
+.movie-result
+  @apply flex flex-col
+  padding: 10px 14px
+  margin-bottom: 12px
+  border: 1px solid #ffc20055
+  border-radius: 4px
+
 </style>

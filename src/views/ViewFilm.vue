@@ -2,9 +2,20 @@
 import { useRouter } from 'vue-router';
 import Spoiler from '../components/Base/Spoilers.vue'
 import { useMoviesStore } from '../stores/movies';
+import { onMounted, reactive } from 'vue';
+import { IMovieResponse } from '../services/omdbapi/interfaces/movie-response.interface';
 
 const router = useRouter();
 const movieStore = useMoviesStore();
+
+const state = reactive({
+  movie: null as IMovieResponse | null,
+})
+
+onMounted(async () => {
+  const movieImdbId = router.currentRoute.value.params['id'] as string;
+  state.movie = await movieStore.getMovieById(movieImdbId);
+});
 </script>
 
 <template>
@@ -12,11 +23,11 @@ const movieStore = useMoviesStore();
     <v-icon name="bi-arrow-bar-left" scale="1.5" fill="#fec200"></v-icon>
     <span class="text-xl">Back</span>
   </div>
-  <div class="film" v-if="movieStore.film">
+  <div class="film" v-if="!movieStore.isLoading && state.movie">
     <div class="flex flex-col gap-8">
-      <img class="poster" :src="movieStore.film.Poster" :alt="movieStore.film.Title + ' poster'">
+      <img class="poster" :src="state.movie.Poster" :alt="state.movie.Title + ' poster'">
       <div class="ratings">
-        <a v-if="movieStore.film.Ratings[0]?.Value" :href="`https://www.imdb.com/title/${movieStore.film.imdbID}`"
+        <a v-if="state.movie.Ratings[0]?.Value" :href="`https://www.imdb.com/title/${state.movie.imdbID}`"
           target="_blank" rel="noopener noreferrer">
           <div class="image">
             <img src="../assets/icon-imdb.webp" alt="IMDB icon">
@@ -24,10 +35,10 @@ const movieStore = useMoviesStore();
               <v-icon name="hi-external-link" scale="1.5"></v-icon>
             </div>
           </div>
-          <span>{{ movieStore.film.Ratings[0].Value }}</span>
+          <span>{{ state.movie.Ratings[0].Value }}</span>
         </a>
-        <a v-if="movieStore.film.Ratings[1]?.Value"
-          :href="`https://www.rottentomatoes.com/search?search=${movieStore.film.Title}`" target="_blank"
+        <a v-if="state.movie.Ratings[1]?.Value"
+          :href="`https://www.rottentomatoes.com/search?search=${state.movie.Title}`" target="_blank"
           rel="noopener noreferrer">
           <div class="image">
             <img src="../assets/icon-tomatoes.webp" alt="Rotten Tomatoes icon">
@@ -35,10 +46,10 @@ const movieStore = useMoviesStore();
               <v-icon name="hi-search" scale="1.5"></v-icon>
             </div>
           </div>
-          <span>{{ movieStore.film.Ratings[1].Value }}</span>
+          <span>{{ state.movie.Ratings[1].Value }}</span>
         </a>
-        <a v-if="movieStore.film.Ratings[2]?.Value"
-          :href="`https://www.metacritic.com/search/all/${movieStore.film.Title}/results`" target="_blank"
+        <a v-if="state.movie.Ratings[2]?.Value"
+          :href="`https://www.metacritic.com/search/all/${state.movie.Title}/results`" target="_blank"
           rel="noopener noreferrer">
           <div class="image">
             <img src="../assets/icon-meta.webp" alt="Metascore icon">
@@ -46,48 +57,48 @@ const movieStore = useMoviesStore();
               <v-icon name="hi-search" scale="1.5"></v-icon>
             </div>
           </div>
-          <span>{{ movieStore.film.Ratings[2].Value }}</span>
+          <span>{{ state.movie.Ratings[2].Value }}</span>
         </a>
       </div>
     </div>
     <div class="info">
       <h2 class="text-xl font-bold font-mono">
-        {{ movieStore.film.Title }}
+        {{ state.movie.Title }}
       </h2>
       <ul>
         <li>
-          <b>Year:</b> {{ movieStore.film.Year }}
+          <b>Year:</b> {{ state.movie.Year }}
         </li>
         <li>
-          <b>Rated:</b> {{ movieStore.film.Rated }}
+          <b>Rated:</b> {{ state.movie.Rated }}
         </li>
         <li>
-          <b>Runtime:</b> {{ movieStore.film.Runtime }}
+          <b>Runtime:</b> {{ state.movie.Runtime }}
         </li>
         <li>
-          <b>Genre:</b> {{ movieStore.film.Genre }}
+          <b>Genre:</b> {{ state.movie.Genre }}
         </li>
         <li>
-          <b>Director:</b> {{ movieStore.film.Director }}
+          <b>Director:</b> {{ state.movie.Director }}
         </li>
         <li>
-          <b>Actors:</b> {{ movieStore.film.Actors }}
+          <b>Actors:</b> {{ state.movie.Actors }}
         </li>
         <li>
-          <b>Language:</b> {{ movieStore.film.Language }}
+          <b>Language:</b> {{ state.movie.Language }}
         </li>
         <li>
-          <b>Country:</b> {{ movieStore.film.Country }}
+          <b>Country:</b> {{ state.movie.Country }}
         </li>
         <li>
           <b>Plot:</b>
-          <Spoiler :data="movieStore.film.Plot" />
+          <Spoiler :data="state.movie.Plot" />
         </li>
       </ul>
     </div>
   </div>
-  <div v-else>
-    error
+  <div v-else class="flex justify-center mt-20">
+    <v-icon name="bi-film" animation="float" scale="2" speed="fast" fill="#aaa"></v-icon>
   </div>
 </template>
 
