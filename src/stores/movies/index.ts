@@ -12,11 +12,9 @@ export const useMoviesStore = defineStore("movies", () => {
     isLoading.value = true;
     const results = await omdbapi.search({s: title});
     isLoading.value = false;
-    if(results) {
-      return results.Search;
-    }
-    return null;
+    return results ? results.Search : null;
   }
+
   async function getMovieById(imdbId: string): Promise<IMovieResponse | null> {
     isLoading.value = true;
     const movie = await omdbapi.searchByIdOrTitle({i: imdbId});

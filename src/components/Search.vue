@@ -2,6 +2,7 @@
 import { ref, reactive } from 'vue';
 import { useMoviesStore } from '../stores/movies';
 import { ISearchResponse } from '../services/omdbapi/interfaces/movie-search-response.interface';
+import AppLoading from './Base/AppLoading.vue';
 
 const title = ref('')
 const state = reactive({
@@ -19,7 +20,7 @@ async function searchMovie() {
     <input type="text" placeholder="Search by title" v-model="title">
     <button class="bg-yellow" type="submit">Search</button>
   </form>
-  <div v-if="state.searchResults.length">
+  <div v-if="state.searchResults.length && !movieStore.isLoading">
     <a class="mb-4" :href="`/movie/${result.imdbID}`" v-for="result in state.searchResults">
       <div class="movie-result">
         <span>{{ result.Title }} ({{ result.Year }})</span>
@@ -27,6 +28,7 @@ async function searchMovie() {
       </div>
     </a>
   </div>
+  <AppLoading v-else-if="movieStore.isLoading" />
 </template>
 
 <style scoped lang="sass">

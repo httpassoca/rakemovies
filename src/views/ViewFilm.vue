@@ -4,6 +4,7 @@ import Spoiler from '../components/Base/Spoilers.vue'
 import { useMoviesStore } from '../stores/movies';
 import { onMounted, reactive } from 'vue';
 import { IMovieResponse } from '../services/omdbapi/interfaces/movie-response.interface';
+import AppLoading from '../components/Base/AppLoading.vue';
 
 const router = useRouter();
 const movieStore = useMoviesStore();
@@ -97,14 +98,12 @@ onMounted(async () => {
       </ul>
     </div>
   </div>
-  <div v-else class="flex justify-center mt-20">
-    <v-icon name="bi-film" animation="float" scale="2" speed="fast" fill="#aaa"></v-icon>
-  </div>
+  <AppLoading v-else />
 </template>
 
 <style scoped lang="sass">
 .film
-  @apply flex justify-start gap-4
+  @apply flex justify-start gap-4 mt-4
   width: 1000px
   .info
     width: 400px
