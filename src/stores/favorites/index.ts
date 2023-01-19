@@ -17,6 +17,7 @@ export const useFavoritesStore = defineStore("favorites", () => {
   async function addFavorite(imdbId: string): Promise<IRakemovieMovieResponse | null> {
     isLoading.value = true;
     const movie = await rakemovieapi.createMovie(imdbId);
+    // update favorites list
     searchFavorites();
     isLoading.value = false;
     return movie || null;
@@ -25,6 +26,8 @@ export const useFavoritesStore = defineStore("favorites", () => {
   async function removeFavorite(id: string): Promise<void> {
     isLoading.value = true;
     await rakemovieapi.deleteMovie(id);
+    // update favorites list
+    searchFavorites();
     isLoading.value = false;
   }
 
