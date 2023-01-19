@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import {useRakemoviesStore} from '../stores/favorites'
+import { useFavoritesStore } from '../stores/favorites'
 
-const favoritesStore = useRakemoviesStore()
+const favoritesStore = useFavoritesStore()
 
 onMounted(() => {
   favoritesStore.searchFavorites();
@@ -10,12 +10,25 @@ onMounted(() => {
 </script>
 
 <template>
-  <ul>
-    <li
+  <h2 class="text-xl mb-4">
+    My favorites
+  </h2>
+  <div class="flex flex-col">
+    <div
+      class="favorite"
       v-for="(favorite, i) in favoritesStore.favorites"
       :key="i"
     >
-      {{ favorite.title }}
-    </li>
-  </ul>
+      <span>{{ favorite.title }} ({{ favorite.year }})</span>
+    </div>
+  </div>
 </template>
+
+<style scoped lang="sass">
+.favorite
+  @apply flex flex-col
+  padding: 10px 14px
+  margin-bottom: 10px
+  border: 1px solid #ffc20055
+  border-radius: 4px
+</style>

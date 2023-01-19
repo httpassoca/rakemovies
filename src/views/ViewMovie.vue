@@ -26,139 +26,141 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div
-    class="cursor-pointer font-sans"
-    @click="router.push('/')"
-  >
-    <v-icon
-      name="bi-arrow-bar-left"
-      scale="1.5"
-      fill="#fec200"
-    />
-    <span class="text-xl">Back</span>
-  </div>
-  <div
-    class="film"
-    v-if="!movieStore.isLoading && state.movie"
-  >
-    <div class="flex flex-col gap-8">
-      <img
-        class="poster"
-        :src="state.movie.Poster"
-        :alt="state.movie.Title + ' poster'"
-      >
-      <div class="ratings">
-        <a
-          v-if="state.movie.Ratings[0]?.Value"
-          :href="`https://www.imdb.com/title/${state.movie.imdbID}`"
-          target="_blank"
-          rel="noopener noreferrer"
+  <div class="ml-4">
+    <div
+      class="cursor-pointer font-sans"
+      @click="router.push('/')"
+    >
+      <v-icon
+        name="bi-arrow-bar-left"
+        scale="1.5"
+        fill="#fec200"
+      />
+      <span class="text-xl">Back</span>
+    </div>
+    <div
+      class="film"
+      v-if="!movieStore.isLoading && state.movie"
+    >
+      <div class="flex flex-col gap-8">
+        <img
+          class="poster"
+          :src="state.movie.Poster"
+          :alt="state.movie.Title + ' poster'"
         >
-          <div class="image">
-            <img
-              src="../assets/icon-imdb.webp"
-              alt="IMDB icon"
-            >
-            <div class="icon">
-              <v-icon
-                name="hi-external-link"
-                scale="1.5"
-              />
+        <div class="ratings">
+          <a
+            v-if="state.movie.Ratings[0]?.Value"
+            :href="`https://www.imdb.com/title/${state.movie.imdbID}`"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div class="image">
+              <img
+                src="../assets/icon-imdb.webp"
+                alt="IMDB icon"
+              >
+              <div class="icon">
+                <v-icon
+                  name="hi-external-link"
+                  scale="1.5"
+                />
+              </div>
             </div>
-          </div>
-          <span>{{ state.movie.Ratings[0].Value }}</span>
-        </a>
-        <a
-          v-if="state.movie.Ratings[1]?.Value"
-          :href="`https://www.rottentomatoes.com/search?search=${state.movie.Title}`"
-          target="_blank"
-          rel="noopener noreferrer"
+            <span>{{ state.movie.Ratings[0].Value }}</span>
+          </a>
+          <a
+            v-if="state.movie.Ratings[1]?.Value"
+            :href="`https://www.rottentomatoes.com/search?search=${state.movie.Title}`"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div class="image">
+              <img
+                src="../assets/icon-tomatoes.webp"
+                alt="Rotten Tomatoes icon"
+              >
+              <div class="icon">
+                <v-icon
+                  name="hi-search"
+                  scale="1.5"
+                />
+              </div>
+            </div>
+            <span>{{ state.movie.Ratings[1].Value }}</span>
+          </a>
+          <a
+            v-if="state.movie.Ratings[2]?.Value"
+            :href="`https://www.metacritic.com/search/all/${state.movie.Title}/results`"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div class="image">
+              <img
+                src="../assets/icon-meta.webp"
+                alt="Metascore icon"
+              >
+              <div class="icon">
+                <v-icon
+                  name="hi-search"
+                  scale="1.5"
+                />
+              </div>
+            </div>
+            <span>{{ state.movie.Ratings[2].Value }}</span>
+          </a>
+        </div>
+      </div>
+      <div class="info">
+        <h2 class="text-xl font-bold font-mono">
+          {{ state.movie.Title }}
+        </h2>
+        <ul>
+          <li>
+            <b>Year:</b> {{ state.movie.Year }}
+          </li>
+          <li>
+            <b>Rated:</b> {{ state.movie.Rated }}
+          </li>
+          <li>
+            <b>Runtime:</b> {{ state.movie.Runtime }}
+          </li>
+          <li>
+            <b>Genre:</b> {{ state.movie.Genre }}
+          </li>
+          <li>
+            <b>Director:</b> {{ state.movie.Director }}
+          </li>
+          <li>
+            <b>Actors:</b> {{ state.movie.Actors }}
+          </li>
+          <li>
+            <b>Language:</b> {{ state.movie.Language }}
+          </li>
+          <li>
+            <b>Country:</b> {{ state.movie.Country }}
+          </li>
+          <li>
+            <b>Plot:</b>
+            <Spoiler :data="state.movie.Plot" />
+          </li>
+        </ul>
+        <button
+          v-if="!favoritesStore.isFavorite(movieImdbId)"
+          @click="addFavorite"
         >
-          <div class="image">
-            <img
-              src="../assets/icon-tomatoes.webp"
-              alt="Rotten Tomatoes icon"
-            >
-            <div class="icon">
-              <v-icon
-                name="hi-search"
-                scale="1.5"
-              />
-            </div>
-          </div>
-          <span>{{ state.movie.Ratings[1].Value }}</span>
-        </a>
-        <a
-          v-if="state.movie.Ratings[2]?.Value"
-          :href="`https://www.metacritic.com/search/all/${state.movie.Title}/results`"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <div class="image">
-            <img
-              src="../assets/icon-meta.webp"
-              alt="Metascore icon"
-            >
-            <div class="icon">
-              <v-icon
-                name="hi-search"
-                scale="1.5"
-              />
-            </div>
-          </div>
-          <span>{{ state.movie.Ratings[2].Value }}</span>
-        </a>
+          Click to favorite
+        </button>
       </div>
     </div>
-    <div class="info">
-      <h2 class="text-xl font-bold font-mono">
-        {{ state.movie.Title }}
-      </h2>
-      <ul>
-        <li>
-          <b>Year:</b> {{ state.movie.Year }}
-        </li>
-        <li>
-          <b>Rated:</b> {{ state.movie.Rated }}
-        </li>
-        <li>
-          <b>Runtime:</b> {{ state.movie.Runtime }}
-        </li>
-        <li>
-          <b>Genre:</b> {{ state.movie.Genre }}
-        </li>
-        <li>
-          <b>Director:</b> {{ state.movie.Director }}
-        </li>
-        <li>
-          <b>Actors:</b> {{ state.movie.Actors }}
-        </li>
-        <li>
-          <b>Language:</b> {{ state.movie.Language }}
-        </li>
-        <li>
-          <b>Country:</b> {{ state.movie.Country }}
-        </li>
-        <li>
-          <b>Plot:</b>
-          <Spoiler :data="state.movie.Plot" />
-        </li>
-      </ul>
-      <button
-        v-if="!favoritesStore.isFavorite(movieImdbId)"
-        @click="addFavorite"
-      >
-        Click to favorite
-      </button>
-    </div>
+    <AppLoading v-else />
   </div>
-  <AppLoading v-else />
 </template>
 
 <style scoped lang="sass">
 .film
   @apply flex justify-start gap-4 mt-4
-  width: 1000px
+  width: 100%
   .info
     width: 400px
 .poster

@@ -1,6 +1,3 @@
-<script setup lang="ts">
-</script>
-
 <template>
   <p>Need some inspiration? Try searching my favorites: </p>
   <div>
