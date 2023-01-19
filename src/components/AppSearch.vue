@@ -30,17 +30,17 @@ async function searchMovie () {
     </button>
   </form>
   <div v-if="state.searchResults.length && !movieStore.isLoading">
-    <a
+    <router-link
       v-for="(result, index) in state.searchResults"
       :key="index"
-      :href="`/movie/${result.imdbID}`"
+      :to="`/movie/${result.imdbID}`"
       class="mb-4"
     >
       <div class="movie-result">
         <span>{{ result.Title }} ({{ result.Year }})</span>
         <span>Type: {{ result.Type }}</span>
       </div>
-    </a>
+    </router-link>
   </div>
   <AppLoading v-else-if="movieStore.isLoading" />
 </template>
