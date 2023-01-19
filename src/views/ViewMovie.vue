@@ -5,16 +5,22 @@ import { useMoviesStore } from '../stores/movies'
 import { onMounted, reactive } from 'vue'
 import { IMovieResponse } from '../services/omdbapi/interfaces/movie-response.interface'
 import AppLoading from '../components/Base/AppLoading.vue'
+import { useFavoritesStore } from '../stores/favorites'
 
 const router = useRouter()
 const movieStore = useMoviesStore()
+const favoritesStore = useFavoritesStore()
+const movieImdbId = router.currentRoute.value.params.id as string
 
 const state = reactive({
   movie: null as IMovieResponse | null
 })
 
+async function addFavorite(): Promise<void> {
+  await favoritesStore.addFavorite(movieImdbId);
+}
+
 onMounted(async () => {
-  const movieImdbId = router.currentRoute.value.params.id as string
   state.movie = await movieStore.getMovieById(movieImdbId)
 })
 </script>
@@ -138,6 +144,12 @@ onMounted(async () => {
           <Spoiler :data="state.movie.Plot" />
         </li>
       </ul>
+      <button
+        v-if="!favoritesStore.isFavorite(movieImdbId)"
+        @click="addFavorite"
+      >
+        Click to favorite
+      </button>
     </div>
   </div>
   <AppLoading v-else />
