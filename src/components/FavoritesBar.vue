@@ -2,6 +2,8 @@
 import { onMounted, ref } from 'vue';
 import { useFavoritesStore } from '../stores/favorites'
 import AppLoading from './Base/AppLoading.vue'
+import AppButton from './Base/AppButton.vue'
+import AppInput from './Base/AppInput.vue'
 
 const favoritesStore = useFavoritesStore()
 const searchTitle = ref('')
@@ -27,24 +29,24 @@ async function searchFavorite() {
     My favorites
   </h2>
   <form @submit.prevent="searchFavorite">
-    <input
+    <AppInput
       type="text"
       placeholder="Title"
       v-model="searchTitle"
-    >
-    <input
+    />
+    <AppInput
       type="text"
       placeholder="Year"
       v-model="searchYear"
-    >
-    <input
+    />
+    <AppInput
       type="text"
       placeholder="Type"
       v-model="searchType"
-    >
-    <button class="bg-yellow">
+    />
+    <AppButton type="submit">
       Make a search!
-    </button>
+    </AppButton>
   </form>
   <div
     v-if="favoritesStore.favorites.length && !favoritesStore.isLoading"
@@ -74,16 +76,6 @@ async function searchFavorite() {
 <style scoped lang="sass">
 form
   @apply flex flex-col gap-2 mb-6
-  input
-    background-color: white
-    padding: 6px 12px
-    color: black
-    outline: none
-    border-radius: 4px
-  button
-    color: black
-    padding: 6px 12px
-    border-radius: 4px
 .favorite
   @apply flex items-center justify-between
   padding: 10px 14px

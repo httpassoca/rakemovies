@@ -2,6 +2,7 @@
 import { ref, reactive } from 'vue'
 import AppTitle from '../components/Base/AppTitle.vue';
 import AppInput from '../components/Base/AppInput.vue';
+import AppButton from '../components/Base/AppButton.vue';
 import AppLoading from '../components/Base/AppLoading.vue';
 import Inspiration from '../components/AppInspiration.vue';
 import { useMoviesStore } from '../stores/movies';
@@ -25,16 +26,14 @@ async function searchMovie () {
     <AppTitle /><form @submit.prevent="searchMovie">
       <AppInput
         type="text"
+        class="w-full mr-2"
         placeholder="Search by title"
         v-model="title"
       />
       
-      <button
-        class="bg-yellow"
-        type="submit"
-      >
+      <AppButton type="submit">
         Search
-      </button>
+      </AppButton>
     </form>
     <div v-if="state.searchResults.length && !movieStore.isLoading">
       <router-link
@@ -59,11 +58,8 @@ main
   max-width: 1000px
 form
   display: flex
-  gap: 8px
-button
-  color: black
-  padding: 6px 12px
-  border-radius: 4px
+  justify-content: space-between
+  align-items: baseline
 
 .movie-result
   @apply flex flex-col

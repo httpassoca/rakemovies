@@ -5,6 +5,7 @@ import { useMoviesStore } from '../stores/movies'
 import { onMounted, reactive } from 'vue'
 import { IMovieResponse } from '../services/omdbapi/interfaces/movie-response.interface'
 import AppLoading from '../components/Base/AppLoading.vue'
+import AppButton from '../components/Base/AppButton.vue'
 import { useFavoritesStore } from '../stores/favorites'
 
 const router = useRouter()
@@ -145,13 +146,12 @@ onMounted(async () => {
             <Spoiler :data="state.movie.Plot" />
           </li>
         </ul>
-        <button
-          class="bg-yellow mt-4"
+        <AppButton
           v-if="!favoritesStore.isFavorite(movieImdbId)"
           @click="addFavorite"
         >
           Click to favorite
-        </button>
+        </AppButton>
       </div>
     </div>
     <AppLoading v-else />
@@ -186,9 +186,4 @@ onMounted(async () => {
       img
         filter: grayscale(1) brightness(0.2)
 
-
-button
-  color: black
-  padding: 6px 12px
-  border-radius: 4px
 </style>
