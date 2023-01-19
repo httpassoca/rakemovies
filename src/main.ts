@@ -9,7 +9,7 @@ import './icons.ts'
 
 // @ts-ignore
 const app = createApp(App);
-app.component("v-icon", OhVueIcon);
+app.component("VIcon", OhVueIcon);
 app.use(router);
 app.use(pinia);
 app.mount("#app");
