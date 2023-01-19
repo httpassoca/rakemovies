@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
+import {useRouter} from 'vue-router';
 import { useFavoritesStore } from '../stores/favorites'
 import AppLoading from './Base/AppLoading.vue'
 import AppButton from './Base/AppButton.vue'
@@ -9,6 +10,8 @@ const favoritesStore = useFavoritesStore()
 const searchTitle = ref('')
 const searchYear = ref('')
 const searchType = ref('')
+
+const router = useRouter();
 
 onMounted(() => {
   favoritesStore.searchFavorites();
@@ -58,11 +61,18 @@ async function searchFavorite() {
       :key="i"
     >
       <span>{{ favorite.title }} ({{ favorite.year }})</span>
-      <v-icon
-        name="co-trash"
-        @click="deleteFavorite(favorite.id)"
-        class="cursor-pointer"
-      />
+      <div class="flex gap-2 items-center">
+        <v-icon
+          @click="router.replace(`/movie/edit/${favorite.imdbID}`)"
+          name="co-pencil"
+          class="cursor-pointer"
+        />
+        <v-icon
+          name="co-trash"
+          @click="deleteFavorite(favorite.id)"
+          class="cursor-pointer"
+        />
+      </div>
     </div>
   </div>
   <div v-else-if="favoritesStore.isLoading">

@@ -34,8 +34,17 @@ export const useFavoritesStore = defineStore("favorites", () => {
   async function editFavorite(imdbId: string, data: IRakemovieMovie): Promise<IRakemovieMovieResponse> {
     isLoading.value = true;
     const movie = await rakemovieapi.editMovie({ imdbId, data });
+    // update favorites list
+    searchFavorites();
     isLoading.value = false;
     return movie;
+  }
+
+  async function getFavorite(imdbId: string): Promise<IRakemovieMovieResponse> {
+    isLoading.value = true;
+    const favorite = await rakemovieapi.getMovie(imdbId);
+    isLoading.value = false;
+    return favorite;
   }
 
   async function searchFavorites(search: string | undefined = undefined, year: string | undefined = undefined, type: string | undefined = undefined): Promise<void> {
@@ -48,5 +57,5 @@ export const useFavoritesStore = defineStore("favorites", () => {
     isLoading.value = false;
   }
 
-  return { addFavorite, isLoading, removeFavorite, editFavorite, favorites, searchFavorites, isFavorite};
+  return { addFavorite, isLoading, removeFavorite, editFavorite, favorites, searchFavorites, isFavorite, getFavorite};
 });
