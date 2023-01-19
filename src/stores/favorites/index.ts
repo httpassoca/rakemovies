@@ -40,7 +40,11 @@ export const useFavoritesStore = defineStore("favorites", () => {
 
   async function searchFavorites(search: string | undefined = undefined, year: string | undefined = undefined, type: string | undefined = undefined): Promise<void> {
     isLoading.value = true;
-    favorites.value = await rakemovieapi.searchMovies({ search, year, type });
+    favorites.value = await rakemovieapi.searchMovies({
+      search: search || undefined,
+      year: year || undefined,
+      type: type || undefined
+     });
     isLoading.value = false;
   }
 
