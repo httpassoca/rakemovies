@@ -18,29 +18,29 @@ export class RakemoviesAPI implements IRakemoviesAPI {
   }
 
   public async createMovie(imdbId: string): Promise<IRakemovieMovieResponse> {
-    const movie = await this.rakemoviesApi.post(`/movie`, {
-      id: imdbId,
+    const movie = await this.rakemoviesApi.post(`/movies`, {
+      imdbId,
     });
     return movie.data;
   }
 
   public async getMovie(imdbId: string): Promise<IRakemovieMovieResponse> {
-    const movie = await this.rakemoviesApi.get(`/movie/${imdbId}`);
+    const movie = await this.rakemoviesApi.get(`/movies/${imdbId}`);
     return movie.data;
   }
 
   public async searchMovies(data: IRakemovieSearchRequest): Promise<IRakemovieSearchResponse[]> {
-    const movies = await this.rakemoviesApi.get('/movie/search', {params: {...data}});
+    const movies = await this.rakemoviesApi.get('/movies/search', {params: {...data}});
     return movies.data;
   }
 
   public async editMovie(data: IRakemovieEditMovieRequest): Promise<IRakemovieMovieResponse> {
-    const movie = await this.rakemoviesApi.put(`/movie/${data.imdbId}`, {params: {...data.data}});
+    const movie = await this.rakemoviesApi.put(`/movies/${data.imdbId}`, {params: {...data.data}});
     return movie.data;
   }
 
   public async deleteMovie(id: string): Promise<null> {
-    const res = await this.rakemoviesApi.delete(`/movie/${id}`);
+    const res = await this.rakemoviesApi.delete(`/movies/${id}`);
     return res.data;
   }
 }

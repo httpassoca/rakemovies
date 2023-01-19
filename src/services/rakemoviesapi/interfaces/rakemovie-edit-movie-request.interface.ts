@@ -3,7 +3,7 @@ export interface IRakemovieEditMovieRequest {
   data: IRakemovieMovie;
 }
 
-interface IRakemovieMovie {
+export interface IRakemovieMovie {
   type: string;
   title: string;
   year: string;

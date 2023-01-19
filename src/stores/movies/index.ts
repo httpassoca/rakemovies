@@ -5,7 +5,7 @@ import { ISearchResponse } from "../../services/omdbapi/interfaces/movie-search-
 import { IMovieResponse } from "../../services/omdbapi/interfaces/movie-response.interface";
 
 export const useMoviesStore = defineStore("movies", () => {
-  const isLoading = ref(true);
+  const isLoading = ref(false);
   const omdbapi = new OmdbAPI();
 
   async function searchMovie(title: string): Promise<ISearchResponse[] | null> {
