@@ -14,25 +14,10 @@ const isVisible = ref(false)
     {{ props.data }}
   </span>
   <span
+    class="cursor-pointer"
     @click="isVisible = true"
     v-else
   >
     click to see spoiler
   </span>
 </template>
-
-<style scoped lang="sass">
-form
-  display: flex
-  gap: 8px
-input
-  background-color: white
-  padding: 6px 12px
-  color: black
-  outline: none
-  border-radius: 4px
-button
-  color: black
-  padding: 6px 12px
-  border-radius: 4px
-</style>

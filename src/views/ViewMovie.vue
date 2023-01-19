@@ -141,11 +141,12 @@ onMounted(async () => {
             <b>Country:</b> {{ state.movie.Country }}
           </li>
           <li>
-            <b>Plot:</b>
+            <b>Plot: </b>
             <Spoiler :data="state.movie.Plot" />
           </li>
         </ul>
         <button
+          class="bg-yellow mt-4"
           v-if="!favoritesStore.isFavorite(movieImdbId)"
           @click="addFavorite"
         >
@@ -184,4 +185,10 @@ onMounted(async () => {
         transform: translate(12px, -40px)
       img
         filter: grayscale(1) brightness(0.2)
+
+
+button
+  color: black
+  padding: 6px 12px
+  border-radius: 4px
 </style>

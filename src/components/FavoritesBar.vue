@@ -59,7 +59,7 @@ async function searchFavorite() {
       <v-icon
         name="co-trash"
         @click="deleteFavorite(favorite.id)"
-        class="cursor-pointer "
+        class="cursor-pointer"
       />
     </div>
   </div>
